@@ -17,22 +17,34 @@ public class ImageController {
 
     @Autowired
     private ImageService imageService;
+     @PostMapping("/test")
+    public ResponseEntity<Image> uploadImage(
+            @RequestParam("id") String str) throws IOException {
+        System.out.print(str);
 
-    @PostMapping("/upload")
+        return ResponseEntity.ok(imageService.saveImage(str));
+    }
+
+   /* @PostMapping("/upload")
     public ResponseEntity<Image> uploadImage(
             @RequestParam("file") MultipartFile file,
             @RequestParam("title") String title,
             @RequestParam("description") String description) throws IOException {
+        System.out.print("PostMapping");
         return ResponseEntity.ok(imageService.saveImage(file, title, description));
-    }
+    }*/
 
-    @GetMapping
+   /* @GetMapping
     public ResponseEntity<List<Image>> getAllImages() {
+
+        System.out.print("GetMapping");
         return ResponseEntity.ok(imageService.getAllImages());
+
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteImage(@PathVariable Long id) {
+        System.out.print("DeleteMapping");
         imageService.deleteImage(id);
         return ResponseEntity.noContent().build();
     }
@@ -42,6 +54,7 @@ public class ImageController {
             @PathVariable Long id,
             @RequestParam("title") String title,
             @RequestParam("description") String description) {
+        System.out.print("PutMapping");
         return ResponseEntity.ok(imageService.updateImage(id, title, description));
-    }
+    }*/
 }

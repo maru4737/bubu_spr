@@ -15,11 +15,17 @@ public class ImageService {
     @Autowired
     private ImageRepository imageRepository;
 
-    public Image saveImage(MultipartFile file, String title, String description) throws IOException {
+    /*public Image saveImage(MultipartFile file, String title, String description) throws IOException {
         Image image = new Image();
         image.setTitle(title);
         image.setDescription(description);
         image.setData(file.getBytes());
+        return imageRepository.save(image);
+    }*/
+
+    public Image saveImage(String title) throws IOException {
+        Image image = new Image();
+        image.setTitle(title);
         return imageRepository.save(image);
     }
 
