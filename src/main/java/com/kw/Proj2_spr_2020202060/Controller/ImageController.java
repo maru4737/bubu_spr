@@ -17,7 +17,8 @@ public class ImageController {
 
     @Autowired
     private ImageService imageService;
-     @PostMapping("/test")
+
+    @PostMapping("/test")
     public ResponseEntity<Image> uploadImage(
             @RequestParam("id") String str) throws IOException {
         System.out.print(str);
