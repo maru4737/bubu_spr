@@ -1,14 +1,13 @@
-package com.kw.Proj2_spr_2020202060.Controller;
+package com.kw.Proj2_spr_2020202060.Login.Controller;
 
-import com.kw.Proj2_spr_2020202060.Model.Image;
-import com.kw.Proj2_spr_2020202060.Model.UserVo;
+import com.kw.Proj2_spr_2020202060.Login.Dto.User;
+import com.kw.Proj2_spr_2020202060.Login.Service.LoginService;
 import com.kw.Proj2_spr_2020202060.util.JwtUtil;
-import org.apache.catalina.User;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.http.ResponseEntity;
 
+import javax.swing.plaf.synth.SynthOptionPaneUI;
 import java.io.IOException;
 
 @RestController
@@ -17,32 +16,33 @@ public class LoginController {
 
     private final JwtUtil jwtUtil;
     private final PasswordEncoder passwordEncoder;
+    private final LoginService loginService;
 
-    public LoginController(JwtUtil jwtUtil, PasswordEncoder passwordEncoder) {
+    public LoginController(JwtUtil jwtUtil, PasswordEncoder passwordEncoder, LoginService loginService) {
         this.jwtUtil = jwtUtil;
         this.passwordEncoder = passwordEncoder;
+        this.loginService = loginService;
     }
 
     @CrossOrigin(origins = "http://localhost:8080")
     @PostMapping("/userLogin")
     public ResponseEntity<String> login(
-            @RequestBody UserVo user) throws IOException {
+            @RequestBody User user) throws IOException {
 
+        User pinUser = new User();
+        pinUser = loginService.userLogin(user);
 
-        System.out.print(user.getId());
-        System.out.print(user.getPw());
-
-        String storedPassword = "storedPassword";
-
+        System.out.print("R$#@$#@pinUser : " + pinUser);
         // 비밀번호 확인 (DB에서 조회한 비밀번호와 입력한 비밀번호 비교)
-        if (storedPassword.equals("storedPassword")) {
-            System.out.println("여기탐");
+        if (pinUser != null) {
+
             // 비밀번호가 일치하면 JWT 토큰 생성
-            String token = jwtUtil.generateJwtToken(user);
+            String token = jwtUtil.generateJwtToken(pinUser);
             return ResponseEntity.ok(token); // JWT 토큰 반환
         } else {
-            System.out.println("여기탐2");
-            return ResponseEntity.status(401).body("Invalid credentials");
+            //return ResponseEntity.status(401).body("Invalid credentials");
+            return ResponseEntity.ok("비밀번호 다름");
+
         }
 
     }

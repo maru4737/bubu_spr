@@ -29,12 +29,12 @@ public class JwtAuthenticationFilter  extends OncePerRequestFilter {
 
         /*=============확인용=============*/
         String path = request.getServletPath();
-        System.out.println("Request Path: " + path);
-        System.out.println("Should Filter: " + !shouldNotFilter(request));
+        System.out.println("1Request Path: " + path);
+        System.out.println("2Should Filter: " + !shouldNotFilter(request));
         /*=============확인용=============*/
 
 
-        System.out.print("authHeader : " + authHeader);
+        System.out.print("3authHeader : " + authHeader);
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             String token = authHeader.substring(7);
             String username = jwtUtil.getUserIdFromToken(token);

@@ -1,15 +1,13 @@
-package com.kw.Proj2_spr_2020202060.Controller;
+package com.kw.Proj2_spr_2020202060.Image.Controller;
 
 
-import com.kw.Proj2_spr_2020202060.Model.Image;
-import com.kw.Proj2_spr_2020202060.Service.ImageService;
+import com.kw.Proj2_spr_2020202060.Image.Model.Image;
+import com.kw.Proj2_spr_2020202060.Image.Service.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/images")

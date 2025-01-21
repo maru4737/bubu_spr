@@ -1,9 +1,8 @@
 package com.kw.Proj2_spr_2020202060.util;
 
-import com.kw.Proj2_spr_2020202060.Model.UserVo;
+import com.kw.Proj2_spr_2020202060.Login.Dto.User;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
-import org.slf4j.Logger;
 import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
@@ -29,12 +28,12 @@ public class JwtUtil {
     /**
      * 사용자 pk를 기준으로 JWT 토큰을 발급하여 반환해 준다.
      */
-    public String generateJwtToken(UserVo userVo) {
+    public String generateJwtToken(User user) {
 
         JwtBuilder builder = Jwts.builder()
                 .setHeader(createHeader())                                  // Header 구성
-                .setClaims(createClaims(userVo))                           // Payload - Claims구성
-                .setSubject(String.valueOf(userVo.getId()))              // Payload - Subjects구성
+                .setClaims(createClaims(user))                           // Payload - Claims구성
+                .setSubject(String.valueOf(user.getId()))              // Payload - Subjects구성
                 .setIssuer("profile")                                       // Issuer 구성
                 .signWith(key, SignatureAlgorithm.HS256)                    // Signature 구성 : 이 키를 사용하여 JWT 토큰에 서명을 추가한다. 이 서명은 토큰의 무결성을 보장하는 데 사용된다.
                 .setExpiration(createExpiredDate());                        // Expired Date 구성
@@ -89,18 +88,15 @@ public class JwtUtil {
 
     /**
      * 사용자 정보를 기반으로 클래임을 생성해주는 메서드
-     * @param userVo 사용자 정보
+     * @param user 사용자 정보
      * @return Map<String, Object>
      */
-    private static Map<String, Object> createClaims(UserVo userVo) {
+    private static Map<String, Object> createClaims(User user) {
         // 공개 클래임에 사용자의 이름과 이메일을 설정해서 정보를 조회할 수 있다.
         Map<String, Object> claims = new HashMap<>();
 
-
-
-
-        claims.put(LOGIN_ID, userVo.getId());
-        claims.put(USERNAME, userVo.getName());
+        claims.put(LOGIN_ID, user.getId());
+        claims.put(USERNAME, user.getUsername());
         return claims;
     }
 
